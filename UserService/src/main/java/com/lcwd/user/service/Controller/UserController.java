@@ -2,6 +2,8 @@ package com.lcwd.user.service.Controller;
 
 
 import com.lcwd.user.service.Data.ReqData.UserReqData;
+import com.lcwd.user.service.Data.ResData.ResponseBaseStatusData;
+import com.lcwd.user.service.Data.ResData.ResponseSuccessData;
 import com.lcwd.user.service.Model.users;
 import com.lcwd.user.service.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,8 @@ public class UserController {
 
     @PostMapping(value = "/user")
     public ResponseEntity<?> saveUser(@RequestBody UserReqData userReqData){
-        users user = userService.saveUser(userReqData);
-        return (ResponseEntity) ResponseEntity.status(HttpStatus.OK);
+        ResponseBaseStatusData user = userService.saveUser(userReqData);
+        /*return (ResponseEntity) ResponseEntity.status(HttpStatus.OK);*/
+        return new ResponseEntity<>(new ResponseSuccessData<>(user),HttpStatus.OK);
     }
 }

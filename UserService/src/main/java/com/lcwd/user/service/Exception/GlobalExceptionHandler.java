@@ -6,6 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
+
+
+import java.time.LocalDateTime;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -19,5 +23,13 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.NOT_FOUND)
                 .build();
         return new ResponseEntity<>(response,HttpStatus.NOT_FOUND);
+    }
+    // handling crud exception
+    @ExceptionHandler(CrudException.class)
+    public ResponseEntity<?> crudExceptionHandler(CrudException ex, WebRequest request) {
+        System.out.println("\n" + "CrudException Occurred at: " + LocalDateTime.now());
+        ex.printStackTrace();
+        ErrorDetails errorDetails = new ErrorDetails(ex.getMessage(), ex.getErrorDetails());
+        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
