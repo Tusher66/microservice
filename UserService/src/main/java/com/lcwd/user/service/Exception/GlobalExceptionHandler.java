@@ -32,4 +32,13 @@ public class GlobalExceptionHandler {
         ErrorDetails errorDetails = new ErrorDetails(ex.getMessage(), ex.getErrorDetails());
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    // handling argumentNotValid exception
+    @ExceptionHandler(ArgumentNotValidException.class)
+    public ResponseEntity<?> argumentNotValidHandling(ArgumentNotValidException exception, WebRequest request) {
+        System.out.println("\n" + "ArgumentNotValidException Occurred at: " + LocalDateTime.now());
+        exception.printStackTrace();
+        ErrorDetails errorDetails = new ErrorDetails(exception.getMessage(), exception.getErrorDetails());
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
 }

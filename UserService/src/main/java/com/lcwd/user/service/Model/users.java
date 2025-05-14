@@ -3,6 +3,8 @@ package com.lcwd.user.service.Model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,5 +28,11 @@ public class users {
 
     @Column(name = "about")
     private String about;
+
+    @Column(name = "insert_by")
+    private Long insertBy;
+
+    @Column(name = "insert_date")
+    private LocalDateTime insertDate;
 
 }
