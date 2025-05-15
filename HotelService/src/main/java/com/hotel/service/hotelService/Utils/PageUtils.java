@@ -1,10 +1,10 @@
 package com.hotel.service.hotelService.Utils;
 
-import com.lcwd.user.service.Data.ResData.NewPaginationBaseData;
-import com.lcwd.user.service.Data.ResData.PaginatedResData;
-import com.lcwd.user.service.Data.ResData.PaginationBaseData;
-import com.lcwd.user.service.Data.ResData.RequestBaseData;
-import com.lcwd.user.service.Exception.ArgumentNotValidException;
+import com.hotel.service.hotelService.Data.ResData.NewPaginationBaseData;
+import com.hotel.service.hotelService.Data.ResData.PaginatedResData;
+import com.hotel.service.hotelService.Data.ResData.PaginationBaseData;
+import com.hotel.service.hotelService.Data.ResData.RequestBaseData;
+import com.hotel.service.hotelService.Exception.ArgumentNotValidException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

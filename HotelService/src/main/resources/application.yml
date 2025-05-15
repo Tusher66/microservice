@@ -3,9 +3,9 @@ server:
 
 Spring:
   datasource:
-#    url: jdbc:postgresql://localhost:5432/microservice?serverTimezone=UTC
-    url: jdbc:mysql://localhost:3306/hotelservice?serverTimezone=UTC
-    username: root
+    url: jdbc:postgresql://localhost:5432/hotelservice?serverTimezone=UTC
+#    url: jdbc:mysql://localhost:3306/hotelservice?serverTimezone=UTC
+    username: postgres
     password: root
   jpa:
     show-sql: true

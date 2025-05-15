@@ -1,7 +1,8 @@
 package com.hotel.service.hotelService.Exception;
 
 
-import com.lcwd.user.service.Payload.ApiResponse;
+import com.hotel.service.hotelService.Payload.ApiResponse;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
