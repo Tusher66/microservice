@@ -1,0 +1,13 @@
+server:
+  port: 8882
+
+Spring:
+  datasource:
+#    url: jdbc:postgresql://localhost:5432/microservice?serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/hotelservice?serverTimezone=UTC
+    username: root
+    password: root
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
