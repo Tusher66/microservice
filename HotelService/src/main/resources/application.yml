@@ -1,0 +1,12 @@
+server:
+  port: 8882
+
+Spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/hotelservice?serverTimezone=UTC
+    username: postgres
+    password: root
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
