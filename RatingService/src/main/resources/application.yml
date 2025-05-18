@@ -1,0 +1,8 @@
+server:
+  port: 8883
+
+spring:
+  data:
+    mongodb:
+      url: mongodb://localhost:27017
+      database: microservice
