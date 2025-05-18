@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Builder
 public class RatingResData {
 
-    private Long ratingId;
+    private String ratingId;
     private Long hotelId;
     private Long userId;
     private Long rating;

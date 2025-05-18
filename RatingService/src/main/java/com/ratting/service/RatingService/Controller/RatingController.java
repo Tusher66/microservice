@@ -5,12 +5,11 @@ import com.ratting.service.RatingService.Data.ReqData.RatingReqData;
 import com.ratting.service.RatingService.Data.ResData.ResponseBaseStatusData;
 import com.ratting.service.RatingService.Data.ResData.ResponseSuccessData;
 import com.ratting.service.RatingService.Service.RatingService;
+import io.micrometer.common.lang.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class RatingController {
@@ -23,5 +22,21 @@ public class RatingController {
         ResponseBaseStatusData user = ratingService.saveRating(ratingReqData);
         return new ResponseEntity<>(new ResponseSuccessData<>(user), HttpStatus.OK);
     }
+
+    @GetMapping(value = "/getAllRating")
+    public ResponseEntity<?> getAllRating(
+            @RequestParam(value = "per_page", required = false, defaultValue = "10") int size,
+            @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+            @Nullable @RequestParam(value = "sort_by", required = false, defaultValue = "insert_date") String sortBy,
+            @Nullable @RequestParam(value = "sort_type", required = false, defaultValue = "desc") String sortType,
+            @Nullable @RequestParam(value = "search", required = false) Long search) {
+        return new ResponseEntity<>(ratingService.getAllRatingData(page, size, sortBy, sortType, search), HttpStatus.OK);
+    }
+
+    /*@GetMapping(value = "/getRatingByHotelId")
+    public ResponseEntity<?> getHotelById(
+            @RequestParam(value = "hotel_id") Long hotelId) {
+        return new ResponseEntity<>(hotelService.getHotelDataById(hotelId), HttpStatus.OK);
+    }*/
 
 }
