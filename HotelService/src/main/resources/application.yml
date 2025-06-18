@@ -6,7 +6,21 @@ Spring:
     url: jdbc:postgresql://localhost:5432/hotelservice?serverTimezone=UTC
     username: postgres
     password: root
+
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
+
+  cloud:
+    compatibility-verifier:
+      enabled: false
+
+eureka:
+    instance:
+      prefer-ip-address: true
+    client:
+      fetch-registry: true
+      register-with-eureka: true
+      service-url:
+        defaultZone: http://localhost:8084/eureka

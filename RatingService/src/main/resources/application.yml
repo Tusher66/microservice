@@ -6,3 +6,15 @@ spring:
     mongodb:
       url: mongodb://localhost:27017
       database: microservice
+  cloud:
+    compatibility-verifier:
+      enabled: false
+
+eureka:
+    instance:
+      prefer-ip-address: true
+    client:
+      fetch-registry: true
+      register-with-eureka: true
+      service-url:
+        defaultZone: http://localhost:8084/eureka
