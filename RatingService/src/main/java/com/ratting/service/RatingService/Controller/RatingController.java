@@ -33,10 +33,16 @@ public class RatingController {
         return new ResponseEntity<>(ratingService.getAllRatingData(page, size, sortBy, sortType, search), HttpStatus.OK);
     }
 
-    /*@GetMapping(value = "/getRatingByHotelId")
+    @GetMapping(value = "/getRatingByHotelId")
     public ResponseEntity<?> getHotelById(
             @RequestParam(value = "hotel_id") Long hotelId) {
-        return new ResponseEntity<>(hotelService.getHotelDataById(hotelId), HttpStatus.OK);
-    }*/
+        return new ResponseEntity<>(ratingService.getHotelById(hotelId), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getRatingByUserId")
+    public ResponseEntity<?> getUserById(
+            @RequestParam(value = "user_id") Long userId) {
+        return new ResponseEntity<>(ratingService.getUserById(userId), HttpStatus.OK);
+    }
 
 }

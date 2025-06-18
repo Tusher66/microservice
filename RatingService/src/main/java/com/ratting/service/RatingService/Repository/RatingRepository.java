@@ -7,9 +7,19 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+import java.util.Optional;
+
 public interface RatingRepository extends MongoRepository<Rating,Long> {
 
-    @Query("SELECT r FROM Rating r WHERE  (:search IS NULL OR h.userId= :search)")
+    @Query("SELECT r FROM Rating r WHERE  (:search IS NULL OR r.userId= :search)")
     Page<Rating> findAllRating(@Param("search") Long search, Pageable pageable);
+
+    /*@Query("SELECT r FROM Rating r WHERE r.hotelId= :hotelId")
+    Optional<Rating> findByHotelId(@Param("hotelId") Long hotelId);*/
+
+    List<Rating> findByHotelId(Long userId);
+
+    List<Rating> findByUserId(Long userId);
 
 }

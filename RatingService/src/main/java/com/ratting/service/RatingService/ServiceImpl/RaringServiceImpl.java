@@ -7,6 +7,7 @@ import com.ratting.service.RatingService.Data.ResData.RequestBaseData;
 import com.ratting.service.RatingService.Data.ResData.ResponseBaseStatusData;
 import com.ratting.service.RatingService.Exception.CrudException;
 import com.ratting.service.RatingService.Model.Rating;
+import com.ratting.service.RatingService.Data.ResData.ResponseBaseData;
 import com.ratting.service.RatingService.Repository.RatingRepository;
 import com.ratting.service.RatingService.Service.RatingService;
 import com.ratting.service.RatingService.Utils.PageUtils;
@@ -15,8 +16,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RaringServiceImpl implements RatingService {
@@ -87,4 +90,29 @@ public class RaringServiceImpl implements RatingService {
                 .insertDate(rating.getInsertDate())
                 .build();
     }
+
+    @Override
+    public ResponseBaseData getHotelById(Long hotelId) {
+        List<Rating> RatingData = ratingRepository.findByHotelId(hotelId);
+        return ResponseBaseData.builder()
+                .status(true)
+                .code(1)
+                .message("Data Found")
+                .data(RatingData)
+                .build();
+    }
+
+    @Override
+    public ResponseBaseData getUserById(Long userId) {
+        List<Rating> RatingData = ratingRepository.findByUserId(userId);
+        return ResponseBaseData.builder()
+                .status(true)
+                .code(1)
+                .message("Data Found")
+                .data(RatingData)
+                .build();
+    }
+
+
+
 }

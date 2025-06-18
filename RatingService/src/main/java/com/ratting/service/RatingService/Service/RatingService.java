@@ -10,5 +10,8 @@ public interface RatingService {
     ResponseBaseStatusData saveRating(RatingReqData ratingReqData);
 
     PaginatedResData<?> getAllRatingData(int page, int size, String sortBy, String sortType, Long search);
-    /*ResponseBaseData getHotelDataById(Long hotelId);*/
+
+    ResponseBaseData getHotelById(Long hotelId);
+
+    ResponseBaseData getUserById(Long userId);
 }
