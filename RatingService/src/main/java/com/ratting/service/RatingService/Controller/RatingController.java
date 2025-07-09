@@ -33,10 +33,10 @@ public class RatingController {
         return new ResponseEntity<>(ratingService.getAllRatingData(page, size, sortBy, sortType, search), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/getRatingByHotelId")
-    public ResponseEntity<?> getHotelById(
-            @RequestParam(value = "hotel_id") Long hotelId) {
-        return new ResponseEntity<>(ratingService.getHotelById(hotelId), HttpStatus.OK);
+    @GetMapping(value = "/getRatingByCompanyId")
+    public ResponseEntity<?> getCompanyById(
+            @RequestParam(value = "company_id") Long companyId) {
+        return new ResponseEntity<>(ratingService.getCompanyById(companyId), HttpStatus.OK);
     }
 
     @GetMapping(value = "/getRatingByUserId")

@@ -31,7 +31,7 @@ public class RaringServiceImpl implements RatingService {
     public ResponseBaseStatusData saveRating(RatingReqData ratingReqData) {
         try{
             Rating rating = Rating.builder()
-                    .hotelId(ratingReqData.getHotelId())
+                    .companyId(ratingReqData.getCompanyId())
                     .userId(ratingReqData.getUserId())
                     .rating(ratingReqData.getRating())
                     .feedback(ratingReqData.getFeedback())
@@ -84,7 +84,7 @@ public class RaringServiceImpl implements RatingService {
         return RatingResData.builder()
                 .ratingId(rating.getRatingId())
                 .userId(rating.getUserId())
-                .hotelId(rating.getHotelId())
+                .companyId(rating.getCompanyId())
                 .feedback(rating.getFeedback())
                 .rating(rating.getRating())
                 .insertDate(rating.getInsertDate())
@@ -92,8 +92,8 @@ public class RaringServiceImpl implements RatingService {
     }
 
     @Override
-    public ResponseBaseData getHotelById(Long hotelId) {
-        List<Rating> RatingData = ratingRepository.findByHotelId(hotelId);
+    public ResponseBaseData getCompanyById(Long companyId) {
+        List<Rating> RatingData = ratingRepository.findByCompanyId(companyId);
         return ResponseBaseData.builder()
                 .status(true)
                 .code(1)

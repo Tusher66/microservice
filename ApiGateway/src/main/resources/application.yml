@@ -1,0 +1,25 @@
+server:
+  port: 8081
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: USERSERVICE
+          uri: lb://USERSERVICE
+          predicates:
+            - Path=/users/**
+
+        - id: COMPANYSERVICE
+          uri: lb://COMPANYSERVICE
+          predicates:
+            - Path=/company/**
+
+        - id: RATINGSERVICE
+          uri: lb://RATINGSERVICE
+          predicates:
+            - Path=/rating/**
+  config:
+    import: configserver:http://localhost:8082
+    profiles:
+      active: dev

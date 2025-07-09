@@ -11,7 +11,7 @@ public interface RatingService {
 
     PaginatedResData<?> getAllRatingData(int page, int size, String sortBy, String sortType, Long search);
 
-    ResponseBaseData getHotelById(Long hotelId);
+    ResponseBaseData getCompanyById(Long hotelId);
 
     ResponseBaseData getUserById(Long userId);
 }

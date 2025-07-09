@@ -1,20 +1,26 @@
 server:
   port: 8883
+  servlet:
+    context-path: /rating
 
 spring:
   data:
     mongodb:
       url: mongodb://localhost:27017
-      database: microservice
+      database: ratingService
   cloud:
     compatibility-verifier:
       enabled: false
+  config:
+    import: optional:configserver:http://localhost:8082
+    profiles:
+      active: dev
 
-eureka:
-    instance:
-      prefer-ip-address: true
-    client:
-      fetch-registry: true
-      register-with-eureka: true
-      service-url:
-        defaultZone: http://localhost:8084/eureka
+#eureka:
+#    instance:
+#      prefer-ip-address: true
+#    client:
+#      fetch-registry: true
+#      register-with-eureka: true
+#      service-url:
+#        defaultZone: http://localhost:8084/eureka

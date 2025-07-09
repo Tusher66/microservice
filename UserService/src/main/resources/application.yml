@@ -1,10 +1,12 @@
 server:
   port: 8881
+  servlet:
+    context-path: /users
 
 Spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/microservice?serverTimezone=UTC
-    username: root
+    url: jdbc:postgresql://localhost:5432/userService?serverTimezone=UTC
+    username: postgres
     password: root
   jpa:
     show-sql: true
@@ -13,13 +15,47 @@ Spring:
   cloud:
       compatibility-verifier:
         enabled: false
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      defaultZone: http://localhost:8084/eureka
+  config:
+    import: optional:configserver:http://localhost:8082
+  profiles:
+    active: dev
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health
 
+  endpoint:
+    health:
+      show-details: always
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      ratingCompanyBreaker:
+        resisterHeaderIndicator: true
+        eventConsumerBufferSize: 10
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 6s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+
+  retry:
+    instances:
+      ratingCompanyService:
+        max-attempts: 3
+        wait-duration: 5s
+
+  ratelimiter:
+    instances:
+      userRateLimiter:
+        limit-refresh-period: 4s
+        limit-for-period: 2
+        timeout-duration: 2s
 

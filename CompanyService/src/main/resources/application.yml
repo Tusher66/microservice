@@ -1,0 +1,31 @@
+server:
+  port: 8882
+  servlet:
+    context-path: /company
+
+Spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/companyService?serverTimezone=UTC
+    username: postgres
+    password: root
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  cloud:
+      compatibility-verifier:
+        enabled: false
+  config:
+    import: optional:configserver:http://localhost:8082
+    profiles:
+      active: dev
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#  client:
+#    fetch-registry: true
+#    register-with-eureka: true
+#    service-url:
+#      defaultZone: http://localhost:8084/eureka
+
+

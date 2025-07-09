@@ -1,9 +1,12 @@
 package com.lcwd.user.service.Model;
 
+import com.lcwd.user.service.Data.ResData.Rating;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -34,5 +37,8 @@ public class users {
 
     @Column(name = "insert_date")
     private LocalDateTime insertDate;
+
+    @Transient
+    private List<Rating> ratings = new ArrayList<>();
 
 }

@@ -18,7 +18,7 @@ public interface RatingRepository extends MongoRepository<Rating,Long> {
     /*@Query("SELECT r FROM Rating r WHERE r.hotelId= :hotelId")
     Optional<Rating> findByHotelId(@Param("hotelId") Long hotelId);*/
 
-    List<Rating> findByHotelId(Long userId);
+    List<Rating> findByCompanyId(Long companyId);
 
     List<Rating> findByUserId(Long userId);
 

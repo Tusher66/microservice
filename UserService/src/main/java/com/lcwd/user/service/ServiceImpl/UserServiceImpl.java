@@ -3,18 +3,28 @@ package com.lcwd.user.service.ServiceImpl;
 import com.lcwd.user.service.Data.ReqData.UserReqData;
 import com.lcwd.user.service.Data.ResData.*;
 import com.lcwd.user.service.Exception.CrudException;
+import com.lcwd.user.service.Exception.ResourceNotFoundException;
+import com.lcwd.user.service.External.Service.CompanyService;
 import com.lcwd.user.service.Model.users;
 import com.lcwd.user.service.Repository.UserRepository;
 import com.lcwd.user.service.Service.UserService;
 import com.lcwd.user.service.Utils.PageUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -22,10 +32,16 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
+    @Autowired
+    private CompanyService companyService;
+
     @Override
     public ResponseBaseStatusData saveUser(UserReqData userReqData) {
 
-        try{
+        try {
             users User = users.builder()
                     .userName(userReqData.getUserName())
                     .about(userReqData.getAbout())
@@ -39,7 +55,7 @@ public class UserServiceImpl implements UserService {
                     .code(1)
                     .message("SUCCESSFULLY SAVED.")
                     .build();
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new CrudException("AN UNEXPECTED ERROR OCCURRED.", e.getMessage());
         }
 
@@ -87,12 +103,38 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseBaseData getUserDataById(Long userId) {
-        Optional<users> UserData = userRepository.findById(userId);
+        users userData = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User Not Found!"));
+        String url = UriComponentsBuilder.fromHttpUrl("http://RATINGSERVICE/rating/getRatingByUserId")
+                .queryParam("user_id", userId)
+                .toUriString();
+
+        ResponseEntity<RatingsResponse> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<RatingsResponse>() {
+                }
+        );
+
+        List<Rating> ratings = response.getBody().getData();
+
+        List<Rating> ratingWithCompany = ratings.stream().map(rating -> {
+            CompanyResponse companyResponse = companyService.getCompany(rating.getCompanyId());
+            Company company = companyResponse.getData();
+            rating.setCompany(company);
+
+            rating.setCompany(company);
+
+            return rating;
+        }).collect(Collectors.toList());
+
+        userData.setRatings(ratingWithCompany);
+
         return ResponseBaseData.builder()
                 .status(true)
                 .code(1)
                 .message("Data Found")
-                .data(UserData)
+                .data(userData)
                 .build();
     }
 }

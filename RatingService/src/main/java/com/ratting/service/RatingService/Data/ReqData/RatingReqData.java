@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class RatingReqData {
 
     private String ratingId;
-    private Long hotelId;
+    private Long companyId;
     private Long userId;
     private Long rating;
     private String feedback;

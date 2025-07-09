@@ -18,7 +18,7 @@ public class Rating {
     @Id
     private String ratingId;
 
-    private Long hotelId;
+    private Long companyId;
     private Long userId;
     private Long rating;
     private String feedback;

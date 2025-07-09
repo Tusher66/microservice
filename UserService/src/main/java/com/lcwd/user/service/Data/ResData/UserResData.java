@@ -1,6 +1,9 @@
 package com.lcwd.user.service.Data.ResData;
 
+import com.lcwd.user.service.Data.RatingResData;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,4 +17,5 @@ public class UserResData {
     private String userName;
     private String email;
     private String about;
+    private List<RatingResData> raringList;
 }
