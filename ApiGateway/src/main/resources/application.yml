@@ -2,24 +2,81 @@ server:
   port: 8081
 
 spring:
-  cloud:
-    gateway:
-      routes:
-        - id: USERSERVICE
-          uri: lb://USERSERVICE
-          predicates:
-            - Path=/users/**
-
-        - id: COMPANYSERVICE
-          uri: lb://COMPANYSERVICE
-          predicates:
-            - Path=/company/**
-
-        - id: RATINGSERVICE
-          uri: lb://RATINGSERVICE
-          predicates:
-            - Path=/rating/**
   config:
-    import: configserver:http://localhost:8082
-    profiles:
-      active: dev
+    import: optional:configserver:http://localhost:8082
+  cloud:
+    compatibility-verifier:
+      enabled: false
+    config:
+      profiles:
+        active: dev
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+jwt:
+  secret: key
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health
+
+  endpoint:
+    health:
+      show-details: always
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      ratingCompanyBreaker:
+        resisterHeaderIndicator: true
+        eventConsumerBufferSize: 10
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 6s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+
+
+#server:
+#  port: 8081
+#
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: USERSERVICE
+#          uri: lb://USERSERVICE
+#          predicates:
+#            - Path=/users/**
+#
+#        - id: COMPANYSERVICE
+#          uri: lb://COMPANYSERVICE
+#          predicates:
+#            - Path=/company/**
+#
+#        - id: RATINGSERVICE
+#          uri: lb://RATINGSERVICE
+#          predicates:
+#            - Path=/rating/**
+#
+#        - id: AUTHENTICATIONSERVICE
+#          uri: lb://AUTHENTICATIONSERVICE
+#          predicates:
+#            - Path=/auth/**
+#  config:
+#    import: configserver:http://localhost:8082
+#    profiles:
+#      active: dev
+#
+#jwt:
+#  secret: MiAVzqUXy5Tfr1kVIGpPMiAVzqUXy5Tfr1kVIGpP

@@ -3,7 +3,7 @@ server:
   servlet:
     context-path: /users
 
-Spring:
+spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/userService?serverTimezone=UTC
     username: postgres
@@ -58,4 +58,6 @@ resilience4j:
         limit-refresh-period: 4s
         limit-for-period: 2
         timeout-duration: 2s
+
+
 

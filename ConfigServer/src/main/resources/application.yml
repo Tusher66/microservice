@@ -16,5 +16,5 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/Tusher66/SalonServerConfiguration
+          uri: gitUrl
           clone-on-start: true

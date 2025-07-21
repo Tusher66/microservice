@@ -9,8 +9,6 @@ import com.lcwd.user.service.Model.users;
 import com.lcwd.user.service.Repository.UserRepository;
 import com.lcwd.user.service.Service.UserService;
 import com.lcwd.user.service.Utils.PageUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
@@ -23,6 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -47,6 +46,7 @@ public class UserServiceImpl implements UserService {
                     .about(userReqData.getAbout())
                     .email(userReqData.getEmail())
                     .insertDate(LocalDateTime.now())
+                    .password(userReqData.getPassword())
                     .build();
             userRepository.save(User);
 
@@ -129,6 +129,18 @@ public class UserServiceImpl implements UserService {
         }).collect(Collectors.toList());
 
         userData.setRatings(ratingWithCompany);
+
+        return ResponseBaseData.builder()
+                .status(true)
+                .code(1)
+                .message("Data Found")
+                .data(userData)
+                .build();
+    }
+
+    @Override
+    public ResponseBaseData getUserByUserName(String userName) {
+        Optional<users> userData = Optional.ofNullable(userRepository.findByUsername(userName).orElseThrow(() -> new ResourceNotFoundException("User Not Found!")));
 
         return ResponseBaseData.builder()
                 .status(true)

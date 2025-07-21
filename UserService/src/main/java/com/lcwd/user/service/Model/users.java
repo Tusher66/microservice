@@ -32,6 +32,9 @@ public class users {
     @Column(name = "about")
     private String about;
 
+    @Column(name = "password")
+    private String password;
+
     @Column(name = "insert_by")
     private Long insertBy;
 

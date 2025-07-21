@@ -6,9 +6,7 @@ import com.lcwd.user.service.Data.ResData.ResponseBaseStatusData;
 import com.lcwd.user.service.Data.ResData.ResponseSuccessData;
 import com.lcwd.user.service.Data.ResData.UserResData;
 import com.lcwd.user.service.Service.UserService;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
-import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,12 +40,18 @@ public class UserController {
     @GetMapping(value = "/getUserById")
     //@CircuitBreaker(name = "ratingCompanyBreaker", fallbackMethod = "ratingCompanyFallBack")
     //@Retry(name="ratingCompanyService", fallbackMethod = "ratingCompanyFallBack")
-    @RateLimiter(name="userRateLimiter", fallbackMethod = "ratingCompanyFallBack")
+    @RateLimiter(name = "userRateLimiter", fallbackMethod = "ratingCompanyFallBack")
     public ResponseEntity<?> getUserById(
             @RequestParam(value = "user_id") Long userId) {
-        System.out.println("Retry Count"+retryCount);
+        System.out.println("Retry Count" + retryCount);
         retryCount++;
         return new ResponseEntity<>(userService.getUserDataById(userId), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getUserByUserName")
+    public ResponseEntity<?> getUserByUserName(
+            @RequestParam(value = "user_name") String userName) {
+        return new ResponseEntity<>(userService.getUserByUserName(userName), HttpStatus.OK);
     }
 
     public ResponseEntity<?> ratingCompanyFallBack(Long userId, Exception ex) {

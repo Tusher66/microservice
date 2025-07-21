@@ -15,4 +15,5 @@ public class UserReqData {
     private String userName;
     private String email;
     private String about;
+    private String password;
 }
